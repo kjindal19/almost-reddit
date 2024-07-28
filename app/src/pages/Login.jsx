@@ -5,6 +5,7 @@ import RedditLogo from '../../public/redditlogo.svg';
 import DiscordLogo from '../../public/discordlogo.svg';
 import GithubLogo from '../../public/gitHublogo.svg';
 import { OAuthProvider } from 'appwrite';
+import { account } from '../utils/appwrite';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -16,12 +17,8 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      // TODO: Add login
-      setTimeout(() => {
-          // dummy user
-          setUser({ email });
-      }, 2000);
-
+      const res = await account.createEmailPasswordSession(email,password);
+      setUser(res);
       navigate("/");
     } catch (error) {
       alert('Login failed');
@@ -30,14 +27,51 @@ const Login = () => {
 
   // login with github
   const handleLoginWithGithub = async () => {
+  try {
    // TODO: Add login with Github
+   account.createOAuth2Session(
+    OAuthProvider.Github,
+    "http://localhost:5173",
+    "http://localhost:5173/login"
+   );
   }
+   catch (error) {
+    alert("Github login failed");
+
+   }
+ }
 
   const handleLoginWithDiscord = () => {
+    account.createOAuth2Session(
+      OAuthProvider.Discord,
+      "http://localhost:5173",
+      "http://localhost:5173/login"
+    );
    // TODO: Add login with Discord
   }
 
   const handleAnonymousLogin = () => {
+
+
+    try{
+      const promise = account.createAnonymousSession();
+      promise.then(
+
+        function (response) {
+          
+        if (Response)
+        {
+          navigate("/");
+        }
+      }
+
+    )
+    }
+
+    catch(error)
+    {
+      console.log("Anon login error")
+    }
     // TODO: Add anonymous login
   }
 

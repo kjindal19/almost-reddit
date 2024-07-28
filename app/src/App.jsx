@@ -8,7 +8,7 @@ import { UserProvider, useUser } from './utils/UserContext';
 const PrivateRoutes = () => {
   const { user } = useUser();
   return user ? <Outlet /> : <Navigate to='/login' />;
-}
+}             
 
 const App = () => {
   return (

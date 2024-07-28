@@ -7,6 +7,7 @@ import ChatIcon from '../../public/chat.svg';
 import UserAvatar from '../../public/Avatar.png';
 import { useUser } from '../utils/UserContext';
 import { Avatars } from 'appwrite';
+import { account } from '../utils/appwrite';
 
 const Header = ({ onCreatePostClick }) => {
   const navigate = useNavigate();
@@ -14,6 +15,15 @@ const Header = ({ onCreatePostClick }) => {
 
   const handleLogout = async () => {
     // TODO: Add logout
+    try {
+      await account.deleteSession('current');
+      navigate('/login');
+    }
+    catch(error)
+    {
+      console.error("Failed to Logout",error);
+    }
+    
 
   }
   // Todo: Generate Avatar 

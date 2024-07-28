@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import RedditLogo from '../../public/redditlogo.svg';
+import { account } from '../utils/appwrite';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
@@ -12,9 +13,8 @@ const Signup = () => {
     e.preventDefault();
     try {
       //TODO: Add SignUp
-      setTimeout(() => {
-        navigate('/login');
-      }, 2000);
+      await account.create('unique()', email, password, name);
+      navigate('/login');
     } catch (error) {
       console.error(error);
       alert('Signup failed');

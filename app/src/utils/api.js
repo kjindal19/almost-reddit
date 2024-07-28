@@ -1,15 +1,15 @@
+import { database } from "./appwrite";
+import { ID } from "appwrite";
+import { DATABASE_ID, POSTS_COLLECTION_ID } from "./constants";
+
 // Posts API
 export const createPost = async (title, content, imageURL) => {
   try {
     //TODO: Add Create
     // Mock
-    const post = {
-      title,
-      content,
-      imageURL,
-      createdAt: Date.now(),
-    };
-    return post;
+
+    return await database.createDocument(DATABASE_ID,POSTS_COLLECTION_ID,ID.unique(),{title,content});
+
   } catch (error) {
     console.error(error);
     throw error;
